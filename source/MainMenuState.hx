@@ -29,14 +29,14 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
-	var optionShit:Array<String> = ['victory', 'options'];
+	var optionShit:Array<String> = ['victory', 'options', 'freeplay'];
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
-	public static var firstStart:Bool = true;
+	public static var firstStart:Bool = false;
 
 	public static var nightly:String = "";
 
@@ -91,27 +91,37 @@ class MainMenuState extends MusicBeatState
 
 		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
 
+		var freeplay:FlxSprite = new FlxSprite(0, FlxG.height * 1.6); //dont have the fla with victory lol
+		freeplay.frames = Paths.getSparrowAtlas('Freeplaylol');
+		freeplay.animation.addByPrefix('idle', "freeplay" + " basic", 24);
+		freeplay.animation.addByPrefix('selected', "freeplay" + " white", 24);
+		freeplay.animation.play('idle');
+		freeplay.screenCenter(X);
+		freeplay.scrollFactor.set();
+		freeplay.y = 500;
+		freeplay.ID = 2;
+
+
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(0, FlxG.height * 1.6);
-			menuItem.frames = tex;
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
-			menuItem.animation.play('idle');
-			menuItem.ID = i;
-			menuItem.screenCenter(X);
-			menuItem.scrollFactor.set();
-			menuItems.add(menuItem);
-			menuItem.antialiasing = FlxG.save.data.antialiasing;
-			if (firstStart)
-				FlxTween.tween(menuItem,{y: 120 + (i * 260)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
-					{ 
-						finishedFunnyMove = true; 
-						changeItem();
-					}});
-			else
-				menuItem.y = 120 + (i * 260);
+			if (optionShit[i] != 'freeplay')
+			{
+				var menuItem:FlxSprite = new FlxSprite(0, FlxG.height * 1.6);
+				menuItem.frames = tex;
+				menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
+				menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+				menuItem.animation.play('idle');
+				menuItem.ID = i;
+				menuItem.screenCenter(X);
+				menuItem.scrollFactor.set();
+				menuItems.add(menuItem);
+				menuItem.antialiasing = FlxG.save.data.antialiasing; 
+				menuItem.y = 90 + (i * 260);
+				changeItem();
+			}
 		}
+		menuItems.add(freeplay);
+		finishedFunnyMove = true;
 
 		firstStart = false;
 
@@ -243,7 +253,7 @@ class MainMenuState extends MusicBeatState
 		switch (daChoice)
 		{
 			case 'victory':
-				PlayState.storyPlaylist = ['Victory','endless'];
+				PlayState.storyPlaylist = ['Victory'];
 				PlayState.isStoryMode = true;
 				PlayState.songMultiplier = 1;
 				PlayState.storyDifficulty = 2;

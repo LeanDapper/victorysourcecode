@@ -601,6 +601,12 @@ class PlayState extends MusicBeatState
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
+		switch(boyfriend.curCharacter)
+		{
+			case 'victoryblack':
+				boyfriend.y -= 300;
+		}
+
 		switch (dad.curCharacter)
 		{
 			case 'gf':
@@ -611,9 +617,14 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
-			case 'black':
+			case 'victoryblack':
 				dad.y += 50;
 				camPos.y += 50;
+			case 'black':
+				camPos.y += -200;
+				camPos.x += 400;
+				dad.y += 50;
+				dad.x -= 400;
 			case "spooky":
 				dad.y += 200;
 			case "monster":
@@ -657,7 +668,7 @@ class PlayState extends MusicBeatState
 		// REPOSITIONING PER STAGE
 		switch (Stage.curStage)
 		{
-			case 'victory':
+			case 'victory' | 'parrelel':
 				flashSprite.scrollFactor.set(0, 0);
 
 				gf.visible = false;
@@ -2414,7 +2425,7 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
-		#if debug
+		//#if debug
 		if (FlxG.keys.justPressed.SIX)
 		{
 			if (useVideo)
@@ -2524,7 +2535,7 @@ class PlayState extends MusicBeatState
 					});
 			}
 		}
-		#end
+		//#end
 
 		if (startingSong)
 		{
@@ -2713,8 +2724,11 @@ class PlayState extends MusicBeatState
 				{
 					case 'mom' | 'mom-car':
 						camFollow.y = dad.getMidpoint().y;
-					case 'black':
+					case 'victoryblack':
 						camFollow.y += 50;
+					case 'black':
+						camFollow.y += -200;
+						camFollow.x -= 400;
 					case 'senpai' | 'senpai-angry':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
@@ -2738,6 +2752,13 @@ class PlayState extends MusicBeatState
 				if (luaModchart != null)
 					luaModchart.executeState('playerOneTurn', []);
 				#end
+
+				
+				switch (boyfriend.curCharacter)
+				{
+					case 'victoryblack':
+						camFollow.x -= 50;
+				}
 
 				switch (Stage.curStage)
 				{

@@ -78,7 +78,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
-			case 'black':
+			case 'victoryblack':
 				tex = Paths.getSparrowAtlas('characters/black', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BLACK IDLE', 24, true);
@@ -86,13 +86,43 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'BLACK RIGHT', 24, false);
 				animation.addByPrefix('singDOWN', 'BLACK DOWN', 24, false);
 				animation.addByPrefix('singLEFT', 'BLACK LEFT', 24, false);
+
+				if (isPlayer)
+				{
+					addOffset('idle');
+					addOffset("singUP", -63, 69);
+					addOffset("singLEFT", 55, -10);
+					addOffset("singRIGHT", -66, 13);
+					addOffset("singDOWN", 23, -20);
+				}
+				else
+				{
+					addOffset('idle');
+					addOffset("singUP", 52, 69);
+					addOffset("singRIGHT", 15, -10);
+					addOffset("singLEFT", 126, 12);
+					addOffset("singDOWN", 53, -20);
+				}
 	
+				playAnim('idle');
+			case 'black':
+				tex = Paths.getSparrowAtlas('characters/blackdefeat', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'BLACK IDLE', 24, true);
+				animation.addByPrefix('singUP', 'BLACK UP', 24, false);
+				animation.addByPrefix('singRIGHT', 'BLACK RIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'BLACK DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'BLACK LEFT', 24, false);
+
+				animation.addByPrefix('death', 'BLACK DEATH', 24, false);
+
 				addOffset('idle');
-				addOffset("singUP", 52, 69);
-				addOffset("singRIGHT", 15, -10);
-				addOffset("singLEFT", 126, 12);
-				addOffset("singDOWN", 53, -20);
-	
+				addOffset("singUP", 46, 104);
+				addOffset("singRIGHT", -225, -10);
+				addOffset("singLEFT", 116, 12);
+				addOffset("singDOWN", -22, -20);
+				addOffset("death", 252, 238);
+
 				playAnim('idle');
 		}
 

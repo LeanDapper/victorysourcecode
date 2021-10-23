@@ -20,21 +20,42 @@ class Boyfriend extends Character
 	{
 		if (!debugMode)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
+			if (this.curCharacter != 'bf')
 			{
-				holdTimer += elapsed;
+				if (animation.curAnim.name.startsWith('sing'))
+					{
+						holdTimer += elapsed;
+					}
+		
+					var dadVar:Float = 4;
+		
+					if (curCharacter == 'dad')
+						dadVar = 6.1;
+					if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+					{
+						trace('dance');
+						dance();
+						holdTimer = 0;
+					}
 			}
 			else
-				holdTimer = 0;
-
-			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
 			{
-				playAnim('idle', true, false, 10);
-			}
-
-			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
-			{
-				playAnim('deathLoop');
+				if (animation.curAnim.name.startsWith('sing'))
+					{
+						holdTimer += elapsed;
+					}
+					else
+						holdTimer = 0;
+		
+					if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+					{
+						playAnim('idle', true, false, 10);
+					}
+		
+					if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
+					{
+						playAnim('deathLoop');
+					}
 			}
 		}
 

@@ -40,6 +40,16 @@ class Stage
 					swagBacks['bg'] = bg;
 					toAdd.push(bg);
 				}
+			case 'parrelel':
+				{
+					camZoom = 0.7;
+					curStage = 'victory';
+					var bg:FlxSprite = new FlxSprite(-1619,-800).loadGraphic(Paths.image('parrelel', 'shared'));
+					bg.antialiasing = FlxG.save.data.antialiasing;
+					bg.active = false;
+					swagBacks['bg'] = bg;
+					toAdd.push(bg);
+				}
 				default:
 					{
 						camZoom = 0.9;
